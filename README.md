@@ -1,0 +1,1 @@
+# SOGo-spec
