@@ -1,9 +1,7 @@
-%define sope_source sope-SOPE-%{sope_version}.tar.gz
+%define sope_version 3.2.0
 %define sope_major_version 4
 %define sope_minor_version 9
-%define sope_version 3.2.0
-%define sope_release 1
-%define sope_buildcount 1
+%define build_count 1
 %define sope_makeflags -k
 %define sbjson_major_version 2
 %define sbjson_version 2.3.1
@@ -16,14 +14,14 @@
 Summary:      SOPE
 Name:         sope%{sope_major_version}%{sope_minor_version}
 Version:      %{sope_version}
-Release:      %{sope_release}%{?dist}.%{sope_buildcount}
+Release:      %{build_count}%{?dist}
 Vendor:       http://www.opengroupware.org
 Packager:     Inverse inc. <info@inverse.ca>
 License:      GPL
 URL:          https://github.com/inverse-inc/sope
 Group:        Development/Libraries/Objective C
 AutoReqProv:  off
-Source:       %{sope_source}
+Source:       https://github.com/inverse-inc/sope/archive/SOPE-%{sope_version}.tar.gz
 Prefix:       /usr
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:  gnustep-base gnustep-make gcc-objc postgresql-devel openldap-devel gnustep-base-devel libxml2-devel
@@ -508,6 +506,8 @@ rm -fr ${RPM_BUILD_ROOT}
 
 # ********************************* changelog *************************
 %changelog
+* Wed Oct 12 2015 Mark Verlinde <mark.verlinde@gmail.com>
+- refactor for mock build
 * Thu Aug 02 2012 Jean Raby <jraby@inverse.ca>
 - Deduce the oracle lib path from the build arch
 * Mon Dec 05 2011 Jean Raby <jraby@inverse.ca>
