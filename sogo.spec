@@ -1,8 +1,3 @@
-%define sogo_version 3.2.0
-%define sope_major_version 4
-%define sope_minor_version 9
-%define build_count 1
-
 # We disable OpenChange builds on el5 since it's prehistoric
 %define enable_openchange 1
 %{?el5:%define enable_openchange 0}
@@ -32,18 +27,18 @@
 Summary:      SOGo
 Name:         sogo
 Version:      %{sogo_version}
-Release:      %{build_count}%{?dist}
+Release:      %{dist_suffix}%{?dist}
 Vendor:       http://www.inverse.ca/
 Packager:     Inverse inc. <info@inverse.ca>
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
 Group:        Productivity/Groupware
-Source:       https://github.com/inverse-inc/sogo/archive/SOGo-%{sogo_version}.tar.gz
+Source:       SOGo-%{sogo_version}.tar.gz
 Prefix:       /usr
 AutoReqProv:  off
 Requires:     gnustep-base >= 1.23, sope%{sope_major_version}%{sope_minor_version}-core, httpd, sope%{sope_major_version}%{sope_minor_version}-core, sope%{sope_major_version}%{sope_minor_version}-appserver, sope%{sope_major_version}%{sope_minor_version}-ldap, sope%{sope_major_version}%{sope_minor_version}-cards >= %{sogo_version}, sope%{sope_major_version}%{sope_minor_version}-gdl1-contentstore >= %{sogo_version}, sope%{sope_major_version}%{sope_minor_version}-sbjson, libmemcached, memcached, tmpwatch, zip
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}
-BuildRequires:  gcc-objc gnustep-base gnustep-make gnustep-base-devel sope%{sope_major_version}%{sope_minor_version}-appserver-devel sope%{sope_major_version}%{sope_minor_version}-core-devel sope%{sope_major_version}%{sope_minor_version}-ldap-devel sope%{sope_major_version}%{sope_minor_version}-mime-devel sope%{sope_major_version}%{sope_minor_version}-xml-devel sope%{sope_major_version}%{sope_minor_version}-gdl1-devel sope%{sope_major_version}%{sope_minor_version}-sbjson-devel libmemcached-devel sed libcurl-devel openldap-devel %{?oc_build_depends}
+BuildRequires:  gcc-objc gnustep-base gnustep-make sope%{sope_major_version}%{sope_minor_version}-appserver-devel sope%{sope_major_version}%{sope_minor_version}-core-devel sope%{sope_major_version}%{sope_minor_version}-ldap-devel sope%{sope_major_version}%{sope_minor_version}-mime-devel sope%{sope_major_version}%{sope_minor_version}-xml-devel sope%{sope_major_version}%{sope_minor_version}-gdl1-devel sope%{sope_major_version}%{sope_minor_version}-sbjson-devel libmemcached-devel sed %{?oc_build_depends}
 
 
 # Required by MS Exchange freebusy lookups
@@ -176,7 +171,7 @@ SOGo backend for OpenChange
 ########################################
 %prep
 rm -fr ${RPM_BUILD_ROOT}
-%setup -q -n sogo-SOGo-%{sogo_version}
+%setup -q -n SOGo-%{sogo_version}
 
 
 # small tweak to the python script for RHEL5
@@ -248,8 +243,8 @@ install -d ${RPM_BUILD_ROOT}/var/lib/sogo
 install -d ${RPM_BUILD_ROOT}/var/log/sogo
 install -d ${RPM_BUILD_ROOT}/var/run/sogo
 install -d ${RPM_BUILD_ROOT}/var/spool/sogo
-install -d -m 750 ${RPM_BUILD_ROOT}/etc/sogo
-install -m 640 Scripts/sogo.conf ${RPM_BUILD_ROOT}/etc/sogo/
+install -d -m 750 -o %sogo_user -g %sogo_user ${RPM_BUILD_ROOT}/etc/sogo
+install -m 640 -o %sogo_user -g %sogo_user Scripts/sogo.conf ${RPM_BUILD_ROOT}/etc/sogo/
 #install -m 755 Scripts/openchange_user_cleanup ${RPM_BUILD_ROOT}/%{_sbindir}
 cat Apache/SOGo.conf | sed -e "s@/lib/@/%{_lib}/@g" > ${RPM_BUILD_ROOT}/etc/httpd/conf.d/SOGo.conf
 install -m 600 Scripts/sogo.cron ${RPM_BUILD_ROOT}/etc/cron.d/sogo
@@ -439,9 +434,6 @@ fi
 
 # ********************************* changelog *************************
 %changelog
-* Wed Oct 12 2016 Mark Verlinde <mark.verlinde@gmail.com>
-- refactor for maock build
-
 * Thu Mar 31 2015 Inverse inc. <support@inverse.ca>
 - Change script start sogod for systemd
 
