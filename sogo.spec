@@ -1,7 +1,7 @@
 %define sogo_version 3.2.0
 %define sope_major_version 4
 %define sope_minor_version 9
-%define build_count 1
+%define sogo_release 2
 
 # We disable OpenChange builds on el5 since it's prehistoric
 %define enable_openchange 1
@@ -32,7 +32,7 @@
 Summary:      SOGo
 Name:         sogo
 Version:      %{sogo_version}
-Release:      %{build_count}%{?dist}
+Release:      %{sogo_release}%{?dist}
 Vendor:       http://www.inverse.ca/
 Packager:     Inverse inc. <info@inverse.ca>
 License:      GPL
