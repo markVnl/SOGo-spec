@@ -1,7 +1,7 @@
-%define sope_version 3.2.0
+%define sope_source_version 3.2.0
+%define sope_release 20161023_320
 %define sope_major_version 4
 %define sope_minor_version 9
-%define build_count 1
 %define sope_makeflags -k
 %define sbjson_major_version 2
 %define sbjson_version 2.3.1
@@ -13,15 +13,15 @@
 
 Summary:      SOPE
 Name:         sope%{sope_major_version}%{sope_minor_version}
-Version:      %{sope_version}
-Release:      %{build_count}%{?dist}
+Version:      %{sope_major_version}.%{sope_minor_version}
+Release:      %{sope_release}%{?dist}
 Vendor:       http://www.opengroupware.org
 Packager:     Inverse inc. <info@inverse.ca>
 License:      GPL
 URL:          https://github.com/inverse-inc/sope
 Group:        Development/Libraries/Objective C
 AutoReqProv:  off
-Source:       https://github.com/inverse-inc/sope/archive/SOPE-%{sope_version}.tar.gz
+Source:       https://github.com/inverse-inc/sope/archive/SOPE-%{sope_source_version}.tar.gz
 Prefix:       /usr
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:  gnustep-base gnustep-make gcc-objc postgresql-devel openldap-devel gnustep-base-devel libxml2-devel
@@ -295,7 +295,7 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 
 %prep
 rm -fr ${RPM_BUILD_ROOT}
-%setup -q -n sope-SOPE-%sope_version
+%setup -q -n sope-SOPE-%sope_source_version
 
 # ****************************** build ********************************
 %build
@@ -361,7 +361,7 @@ make %{sope_makeflags} DESTDIR=${RPM_BUILD_ROOT} \
 %endif
 
 rm -f ${RPM_BUILD_ROOT}%{_bindir}/otest
-rm -fr ${RPM_BUILD_ROOT}%{_libdir}/GNUstep/GDLAdaptors-%{sope_version}/SQLite3.gdladaptor
+rm -fr ${RPM_BUILD_ROOT}%{_libdir}/GNUstep/GDLAdaptors-%{sope_major_version}.%{sope_minor_version}/SQLite3.gdladaptor
 
 # rm -f ${RPM_BUILD_ROOT}/usr/GNUstep/System/Tools/Admin/sope-4.9
 # export PATH=$PATH:/usr/sbin
@@ -387,9 +387,9 @@ rm -fr ${RPM_BUILD_ROOT}
 # ****************************** files ********************************
 %files xml
 %defattr(-,root,root,-)
-%{_libdir}/libDOM*.so.%{sope_major_version}*
-%{_libdir}/libSaxObjC*.so.%{sope_major_version}*
-%{_libdir}/libXmlRpc*.so.%{sope_major_version}*
+%{_libdir}/libDOM*.so.%{sope_major_version}.%{sope_minor_version}*
+%{_libdir}/libSaxObjC*.so.%{sope_major_version}.%{sope_minor_version}*
+%{_libdir}/libXmlRpc*.so.%{sope_major_version}.%{sope_minor_version}*
 %{_libdir}/GNUstep/SaxDrivers-%{sope_major_version}.%{sope_minor_version}
 
 %files xml-devel
@@ -412,9 +412,9 @@ rm -fr ${RPM_BUILD_ROOT}
 
 %files core
 %defattr(-,root,root,-)
-%{_libdir}/libEOControl*.so.%{sope_major_version}*
-%{_libdir}/libNGExtensions*.so.%{sope_major_version}*
-%{_libdir}/libNGStreams*.so.%{sope_major_version}*
+%{_libdir}/libEOControl*.so.%{sope_major_version}.%{sope_minor_version}*
+%{_libdir}/libNGExtensions*.so.%{sope_major_version}.%{sope_minor_version}*
+%{_libdir}/libNGStreams*.so.%{sope_major_version}.%{sope_minor_version}*
 
 %files core-devel
 %defattr(-,root,root,-)
@@ -427,8 +427,7 @@ rm -fr ${RPM_BUILD_ROOT}
 
 %files mime
 %defattr(-,root,root,-)
-%{_libdir}/libNGMime*.so.%{sope_major_version}*
-
+%{_libdir}/libNGMime*.so.%{sope_major_version}.%{sope_minor_version}*
 %files mime-devel
 %defattr(-,root,root,-)
 %{_includedir}/NGImap4
@@ -438,9 +437,9 @@ rm -fr ${RPM_BUILD_ROOT}
 
 %files appserver
 %defattr(-,root,root,-)
-%{_libdir}/libNGObjWeb*.so.%{sope_major_version}*
-%{_libdir}/libWEExtensions*.so.%{sope_major_version}*
-%{_libdir}/libWOExtensions*.so.%{sope_major_version}*
+%{_libdir}/libNGObjWeb*.so.%{sope_major_version}.%{sope_minor_version}*
+%{_libdir}/libWEExtensions*.so.%{sope_major_version}.%{sope_minor_version}*
+%{_libdir}/libWOExtensions*.so.%{sope_major_version}.%{sope_minor_version}*
 %{_libdir}/GNUstep/Libraries/Resources/NGObjWeb/*
 %{_libdir}/GNUstep/SoProducts-%{sope_major_version}.%{sope_minor_version}
 %{_libdir}/GNUstep/WOxElemBuilders-%{sope_major_version}.%{sope_minor_version}
@@ -463,7 +462,7 @@ rm -fr ${RPM_BUILD_ROOT}
 
 %files ldap
 %defattr(-,root,root,-)
-%{_libdir}/libNGLdap*.so.%{sope_major_version}*
+%{_libdir}/libNGLdap*.so.%{sope_major_version}.%{sope_minor_version}*
 
 %files ldap-devel
 %defattr(-,root,root,-)
@@ -474,7 +473,7 @@ rm -fr ${RPM_BUILD_ROOT}
 %defattr(-,root,root,-)
 %{_bindir}/connect-EOAdaptor
 %{_bindir}/load-EOAdaptor
-%{_libdir}/libGDLAccess*.so.%{sope_major_version}*
+%{_libdir}/libGDLAccess*.so.%{sope_major_version}.%{sope_minor_version}*
 
 %files gdl1-postgresql
 %defattr(-,root,root,-)
@@ -506,7 +505,7 @@ rm -fr ${RPM_BUILD_ROOT}
 
 # ********************************* changelog *************************
 %changelog
-* Wed Oct 12 2015 Mark Verlinde <mark.verlinde@gmail.com>
+* Wed Oct 12 2016 Mark Verlinde <mark.verlinde@gmail.com>
 - refactor for mock build
 * Thu Aug 02 2012 Jean Raby <jraby@inverse.ca>
 - Deduce the oracle lib path from the build arch
