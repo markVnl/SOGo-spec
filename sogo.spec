@@ -1,7 +1,7 @@
-%define sogo_version 3.2.0
+%define sogo_version 3.2.4
 %define sope_major_version 4
 %define sope_minor_version 9
-%define sogo_release 2
+%define sogo_release 1
 
 # We disable OpenChange builds on el5 since it's prehistoric
 %define enable_openchange 1
