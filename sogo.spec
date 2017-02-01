@@ -1,4 +1,4 @@
-%define sogo_version 3.2.4
+%define sogo_version 3.2.6a
 %define sope_major_version 4
 %define sope_minor_version 9
 %define sogo_release 1
@@ -439,6 +439,9 @@ fi
 
 # ********************************* changelog *************************
 %changelog
+* Tue Feb 02 2017 Stephane de Labrusse <stephdl@de-labrusse.fr>
+- upgrade to 3.2.6a
+
 * Wed Oct 12 2016 Mark Verlinde <mark.verlinde@gmail.com>
 - refactor for maock build
 
