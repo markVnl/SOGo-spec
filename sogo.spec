@@ -1,7 +1,7 @@
 %define sogo_version 3.2.6a
 %define sope_major_version 4
 %define sope_minor_version 9
-%define sogo_release 1
+%define sogo_release 2
 
 # We disable OpenChange builds on el5 since it's prehistoric
 %define enable_openchange 1
@@ -409,7 +409,7 @@ find %{_docdir}/ -name '*.sh' -exec chmod a+x {} \;
 %if 0%{?_with_systemd}
   systemctl daemon-reload
   systemctl enable sogod
-  systemctl start sogod > /dev/null 2>&1
+  systemctl restart sogod > /dev/null 2>&1
 %else
   /sbin/chkconfig --add sogod
   /etc/init.d/sogod condrestart  >&/dev/null
