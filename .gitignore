@@ -1,0 +1,6 @@
+*.rpm
+*.log
+*.gz
+*.bz2
+repodata
+sogo*_NS?
