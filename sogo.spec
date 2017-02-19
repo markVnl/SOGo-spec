@@ -1,7 +1,7 @@
-%define sogo_version 3.2.6a
+%define sogo_version 2.3.19
 %define sope_major_version 4
 %define sope_minor_version 9
-%define sogo_release 2
+%define sogo_release 1
 
 # We disable OpenChange builds on el5 since it's prehistoric
 %define enable_openchange 1
@@ -439,6 +439,9 @@ fi
 
 # ********************************* changelog *************************
 %changelog
+* Thu Feb 16 2017 Stephane de Labrusse <stephdl@de-labrusse.fr>
+- upgrade to 3.2.7
+
 * Tue Feb 02 2017 Stephane de Labrusse <stephdl@de-labrusse.fr>
 - upgrade to 3.2.6a
 

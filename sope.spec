@@ -1,5 +1,5 @@
-%define sope_source_version 3.2.6a
-%define sope_release 20170201_1800
+%define sope_source_version 2.3.19
+%define sope_release 20170219_1200
 %define sope_major_version 4
 %define sope_minor_version 9
 %define sope_makeflags -k
@@ -505,6 +505,8 @@ rm -fr ${RPM_BUILD_ROOT}
 
 # ********************************* changelog *************************
 %changelog
+* Thu Feb 16 2017 Stephane de Labrusse <stephdl@de-labrusse.fr>
+- upgrade to 3.2.7
 * Tue Feb 02 2017 Stephane de Labrusse <stephdl@de-labrusse.fr>
 - upgrade to 3.2.6a
 * Wed Oct 12 2016 Mark Verlinde <mark.verlinde@gmail.com>
