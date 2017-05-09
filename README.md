@@ -41,6 +41,11 @@ Obviously, this modification must be done on all mock architectures. For initiat
 
 Now you can build by
 
-  `dist=ns7 mockcfg=epel-7-x86_64 make-rpms sogo.spec`
+  `dist=ns7 mockcfg=nethserver-7-x86_64 make-rpms sogo.spec`
+
+to push to nethforge-testing
+
+ns-upload-rpms  stephdl@packages.nethserver.org:nscom/7.3.1611/nethforge-testing sogo*.rpm sope*.rpm
+
 
 enjoy :)

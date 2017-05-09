@@ -1,5 +1,5 @@
 %define sope_source_version 3.2.9
-%define sope_release 20170201_1800
+%define sope_release 20170509_2300
 %define sope_major_version 4
 %define sope_minor_version 9
 %define sope_makeflags -k
