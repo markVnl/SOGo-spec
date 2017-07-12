@@ -47,5 +47,8 @@ to push to nethforge-testing
 rm -rf libwbxml*.rpm *devel*.rpm
 ns-upload-rpms  stephdl@packages.nethserver.org:nscom/7.3.1611/nethforge-testing sogo*.rpm sope*.rpm
 
+PS: if you have the error 'Couldn't read packet: Connection reset by peer' you could try to accept the certificate first
+
+  sftp stephdl@packages.nethserver.org
 
 enjoy :)
