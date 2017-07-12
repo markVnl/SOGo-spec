@@ -1,5 +1,5 @@
-%define sope_source_version 3.2.9
-%define sope_release 20170509_2300
+%define sope_source_version 3.2.10
+%define sope_release 20170712_1400
 %define sope_major_version 4
 %define sope_minor_version 9
 %define sope_makeflags -k
@@ -505,6 +505,8 @@ rm -fr ${RPM_BUILD_ROOT}
 
 # ********************************* changelog *************************
 %changelog
+* Wed Jul 12 2017 Stephane de Labrusse <stephdl@de-labrusse.fr>
+- upgrade to 3.2.10
 * Tue May 09 2017 Stephane de Labrusse <stephdl@de-labrusse.fr>
 - upgrade to 3.2.9
 * Tue Feb 02 2017 Stephane de Labrusse <stephdl@de-labrusse.fr>
