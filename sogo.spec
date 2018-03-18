@@ -1,4 +1,4 @@
-%define sogo_version 3.2.10
+%define sogo_version 4.0.0
 %define sope_major_version 4
 %define sope_minor_version 9
 %define sogo_release 1
