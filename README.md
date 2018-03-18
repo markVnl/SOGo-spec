@@ -44,8 +44,12 @@ Now you can build by
   `dist=ns7 mockcfg=nethserver-7-x86_64 make-rpms sogo.spec`
 
 to push to nethforge-testing
-rm -rf libwbxml*.rpm *devel*.rpm
-ns-upload-rpms  stephdl@packages.nethserver.org:nscom/7.3.1611/nethforge-testing sogo*.rpm sope*.rpm
+
+`rm -rf libwbxml*.rpm *devel*.rpm`
+
+upload to nethforge-testing or nethforge
+
+`ns-upload-rpms  stephdl@packages.nethserver.org:nscom/7.4.1708/nethforge-testing sogo*.rpm sope*.rpm`
 
 PS: if you have the error 'Couldn't read packet: Connection reset by peer' you could try to accept the certificate first
 
