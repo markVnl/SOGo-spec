@@ -1,4 +1,4 @@
-%define sogo_version 4.0.0
+%define sogo_version 4.0.2
 %define sope_major_version 4
 %define sope_minor_version 9
 %define sogo_release 1
@@ -439,6 +439,9 @@ fi
 
 # ********************************* changelog *************************
 %changelog
+* Fri Aug 24 2018 Stephane de Labrusse <stephdl@de-labrusse.fr>
+- Upgrade to 4.02
+
 * Wed Jul 12 2017 Stephane de Labrusse <stephdl@de-labrusse.fr>
 - upgrade to 3.2.10
 
