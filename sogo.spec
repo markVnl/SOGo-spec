@@ -3,15 +3,8 @@
 %define sope_minor_version 9
 %define sogo_release 1
 
-# We disable OpenChange builds on el5 since it's prehistoric
-%define enable_openchange 1
-%{?el5:%define enable_openchange 0}
-%{?el6:%define enable_openchange 0}
-%{?el7:%define enable_openchange 0}
-
-%ifarch %ix86
+# We disable OpenChange builds since it's not maintained
 %define enable_openchange 0
-%endif
 
 %{!?sogo_major_version: %global sogo_major_version %(/bin/echo %{sogo_version} | /bin/cut -f 1 -d .)}
 %if %enable_openchange
@@ -189,7 +182,7 @@ rm -fr ${RPM_BUILD_ROOT}
 # ****************************** build ********************************
 %build
 %if 0%{?el7}
-. /usr/lib64/GNUstep/Makefiles/GNUstep.sh
+. %{_libdir}/GNUstep/Makefiles/GNUstep.sh
 %else
 . /usr/share/GNUstep/Makefiles/GNUstep.sh
 %endif
@@ -233,7 +226,7 @@ make DESTDIR=${RPM_BUILD_ROOT} \
      install
 
 %if 0%{?_with_systemd}
-  install -d  ${RPM_BUILD_ROOT}/usr/lib/systemd/system/
+  install -d  ${RPM_BUILD_ROOT}%{_unitdir}
 %else
   install -d  ${RPM_BUILD_ROOT}/etc/init.d
 %endif
@@ -258,8 +251,8 @@ chmod 755 ${RPM_BUILD_ROOT}/etc/cron.daily/sogo-tmpwatch
 cp Scripts/logrotate ${RPM_BUILD_ROOT}/etc/logrotate.d/sogo
 
 %if 0%{?_with_systemd}
-  cp Scripts/sogo-systemd-redhat ${RPM_BUILD_ROOT}/usr/lib/systemd/system/sogod.service
-  chmod 644 ${RPM_BUILD_ROOT}/usr/lib/systemd/system/sogod.service
+  cp Scripts/sogo-systemd-redhat ${RPM_BUILD_ROOT}%{_unitdir}/sogod.service
+  chmod 644 ${RPM_BUILD_ROOT}%{_unitdir}/sogod.service
   mkdir ${RPM_BUILD_ROOT}/etc/tmpfiles.d
   cp Scripts/sogo-systemd.conf ${RPM_BUILD_ROOT}/etc/tmpfiles.d/sogo.conf
   chmod 644 ${RPM_BUILD_ROOT}/etc/tmpfiles.d/sogo.conf
@@ -298,12 +291,12 @@ rm -fr ${RPM_BUILD_ROOT}
 %defattr(-,root,root,-)
 
 %if 0%{?_with_systemd}
-/usr/lib/systemd/system/sogod.service
-/etc/tmpfiles.d/sogo.conf
+%{_unitdir}/sogod.service
+%{_sysconfdir}/tmpfiles.d/sogo.conf
 %else
-/etc/init.d/sogod
+%{_sysconfdir}/init.d/sogod
 %endif
-/etc/cron.daily/sogo-tmpwatch
+%{_sysconfdir}/cron.daily/sogo-tmpwatch
 %dir %attr(0700, %sogo_user, %sogo_user) %{_var}/lib/sogo
 %dir %attr(0700, %sogo_user, %sogo_user) %{_var}/log/sogo
 %dir %attr(0755, %sogo_user, %sogo_user) %{_var}/run/sogo
