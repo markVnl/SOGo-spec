@@ -1,7 +1,7 @@
-%define sogo_version 4.0.5
+%define sogo_version 4.0.7
 %define sope_major_version 4
 %define sope_minor_version 9
-%define sogo_release 2
+%define sogo_release 1
 
 # We disable OpenChange builds since it's not maintained
 %define enable_openchange 0
@@ -432,6 +432,9 @@ fi
 
 # ********************************* changelog *************************
 %changelog
+* Mon Mar 11 2019 Stephane de Labrusse <stephdl@de-labrusse.fr>
+- Upgrade to 4.07
+
 * Fri Aug 24 2018 Stephane de Labrusse <stephdl@de-labrusse.fr>
 - Upgrade to 4.02
 
