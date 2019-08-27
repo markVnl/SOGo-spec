@@ -49,7 +49,7 @@ to push to nethforge-testing
 
 upload to nethforge-testing or nethforge
 
-`ns-upload-rpms  stephdl@packages.nethserver.org:nscom/7.4.1708/nethforge-testing sogo*.rpm sope*.rpm`
+`ns-upload  stephdl@packages.nethserver.org:nscom/7.6.1810/nethforge-testing sogo*.rpm sope*.rpm`
 
 PS: if you have the error 'Couldn't read packet: Connection reset by peer' you could try to accept the certificate first
 
