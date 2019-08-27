@@ -1,7 +1,7 @@
 %define sogo_version 4.0.8
 %define sope_major_version 4
 %define sope_minor_version 9
-%define sogo_release 1
+%define sogo_release 2
 
 # We disable OpenChange builds since it's not maintained
 %define enable_openchange 0
