@@ -1,5 +1,5 @@
-%define sope_source_version 4.1.1
-%define sope_release 20191109_2200
+%define sope_source_version 4.2.0
+%define sope_release 20191218_1900
 %define sope_major_version 4
 %define sope_minor_version 9
 %define sope_makeflags -k
@@ -505,6 +505,8 @@ rm -fr ${RPM_BUILD_ROOT}
 
 # ********************************* changelog *************************
 %changelog
+* Thu Dec 19 2019 Stephane de Labrusse <stephdl@de-labrusse.fr>
+- Bump to 4.2.0
 * Tue Aug 27 2019 Stephane de Labrusse <stephdl@de-labrusse.fr>
 - Upgrade to 4.08
 * Mon Mar 11 2019 Stephane de Labrusse <stephdl@de-labrusse.fr>
