@@ -1,4 +1,4 @@
-%define sogo_version 4.1.1
+%define sogo_version 4.2.0
 %define sope_major_version 4
 %define sope_minor_version 9
 %define sogo_release 1
@@ -332,7 +332,7 @@ rm -fr ${RPM_BUILD_ROOT}
 %config(noreplace) %{_sysconfdir}/cron.d/sogo
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/SOGo.conf
 %config(noreplace) %{_sysconfdir}/sysconfig/sogo
-%doc ChangeLog NEWS Scripts/*sh Scripts/updates.php Apache/SOGo-apple-ab.conf
+%doc ChangeLog Scripts/*sh Scripts/updates.php Apache/SOGo-apple-ab.conf
 
 %files -n sogo-tool
 %{_sbindir}/sogo-tool
@@ -432,6 +432,9 @@ fi
 
 # ********************************* changelog *************************
 %changelog
+* Thu Dec 19 2019 Stephane de Labrusse <stephdl@de-labrusse.fr>
+- Bump to 4.2.0
+
 * Mon Nov 09 2019 Stephane de Labrusse <stephdl@de-labrusse.fr>
 - Upgrade to 4.1.1
 
