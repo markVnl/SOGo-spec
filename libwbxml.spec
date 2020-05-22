@@ -1,19 +1,7 @@
+Summary:        Library and tools to parse, encode and handle WBXML documents
 Name:           libwbxml
 Version:        0.11.6
 Release:        1%{?dist}
-Summary:        Library and tools to parse, encode and handle WBXML documents
-## Used and installed:
-# NEWS:                             ???
-# GNU-LGPL:                         LGPLv2+
-# COPYING:                          LGPLv2+
-# Other files:                      LGPLv2+
-## Not installed:
-# cmake/modules/FindECal1.2.cmake:  BSD
-# cmake/modules/FindIconv.cmake:    GPLv3+
-## Not used:
-# win32/leaktrack/leaktrack.h:      GPLv2+
-# win32/leaktrack/COPYING.txt:      BSD with advertising
-# win32/expat/README.txt:           MIT
 License:        LGPLv2+
 URL:            https://github.com/%{name}/%{name}
 Source:         http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
