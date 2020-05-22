@@ -1,5 +1,5 @@
 %define sope_source_version 4.3.2
-%define sope_release 20200522_0800
+%define sope_release 1
 %define sope_major_version 4
 %define sope_minor_version 9
 %define sope_makeflags -k
@@ -14,7 +14,8 @@
 Summary:      SOPE
 Name:         sope%{sope_major_version}%{sope_minor_version}
 Version:      %{sope_major_version}.%{sope_minor_version}
-Release:      %{sope_release}%{?dist}
+Epoch:        1
+Release:      %{sope_source_version}.%{sope_release}%{?dist}
 Vendor:       http://www.opengroupware.org
 Packager:     Inverse inc. <info@inverse.ca>
 License:      GPL
