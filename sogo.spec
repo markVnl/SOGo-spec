@@ -1,4 +1,4 @@
-%define sogo_version 4.3.0
+%define sogo_version 4.3.2
 %define sope_major_version 4
 %define sope_minor_version 9
 %define sogo_release 1
@@ -432,6 +432,9 @@ fi
 
 # ********************************* changelog *************************
 %changelog
+* Fri May 22 2020  Stephane de Labrusse <stephdl@de-labrusse.fr>
+- Bump to 4.3.2
+
 * Thu Dec 19 2019 Stephane de Labrusse <stephdl@de-labrusse.fr>
 - Bump to 4.2.0
 
