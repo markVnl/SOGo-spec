@@ -1,4 +1,4 @@
-%define sogo_version 4.3.2
+%define sogo_version 5.0.0
 %define sogo_release 1
 %define sope_major_version 4
 %define sope_minor_version 9
@@ -34,9 +34,9 @@ Group:        Productivity/Groupware
 Source:       https://github.com/inverse-inc/sogo/archive/SOGo-%{sogo_version}.tar.gz
 Prefix:       /usr
 AutoReqProv:  no
-Requires:     gnustep-base >= 1.23, sope%{sope_major_version}%{sope_minor_version}-core, httpd, sope%{sope_major_version}%{sope_minor_version}-core, sope%{sope_major_version}%{sope_minor_version}-appserver, sope%{sope_major_version}%{sope_minor_version}-ldap, sope%{sope_major_version}%{sope_minor_version}-cards >= %{sogo_version}, sope%{sope_major_version}%{sope_minor_version}-gdl1-contentstore >= %{sogo_version}, sope%{sope_major_version}%{sope_minor_version}-sbjson, libmemcached, memcached, tmpwatch, zip
+Requires:     gnustep-base >= 1.23, sope%{sope_major_version}%{sope_minor_version}-core, httpd, sope%{sope_major_version}%{sope_minor_version}-core, sope%{sope_major_version}%{sope_minor_version}-appserver, sope%{sope_major_version}%{sope_minor_version}-ldap, sope%{sope_major_version}%{sope_minor_version}-cards >= %{sogo_version}, sope%{sope_major_version}%{sope_minor_version}-gdl1-contentstore >= %{sogo_version}, sope%{sope_major_version}%{sope_minor_version}-sbjson, libmemcached, memcached, tmpwatch, libzip
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}
-BuildRequires:  gcc-objc gnustep-base gnustep-make gnustep-base-devel sope%{sope_major_version}%{sope_minor_version}-appserver-devel sope%{sope_major_version}%{sope_minor_version}-core-devel sope%{sope_major_version}%{sope_minor_version}-ldap-devel sope%{sope_major_version}%{sope_minor_version}-mime-devel sope%{sope_major_version}%{sope_minor_version}-xml-devel sope%{sope_major_version}%{sope_minor_version}-gdl1-devel sope%{sope_major_version}%{sope_minor_version}-sbjson-devel libmemcached-devel sed libcurl-devel openldap-devel %{?oc_build_depends}
+BuildRequires:  gcc-objc gnustep-base gnustep-make gnustep-base-devel sope%{sope_major_version}%{sope_minor_version}-appserver-devel sope%{sope_major_version}%{sope_minor_version}-core-devel sope%{sope_major_version}%{sope_minor_version}-ldap-devel sope%{sope_major_version}%{sope_minor_version}-mime-devel sope%{sope_major_version}%{sope_minor_version}-xml-devel sope%{sope_major_version}%{sope_minor_version}-gdl1-devel sope%{sope_major_version}%{sope_minor_version}-sbjson-devel libmemcached-devel sed libcurl-devel openldap-devel %{?oc_build_depends} libzip-devel
 
 
 # Required by MS Exchange freebusy lookups
@@ -47,11 +47,28 @@ BuildRequires:  gcc-objc gnustep-base gnustep-make gnustep-base-devel sope%{sope
 
 # saml is enabled everywhere except on el5 since its glib2 is prehistoric
 %define saml2_cfg_opts "--enable-saml2"
+%define mfa_cfg_opts "--enable-mfa"
 %{?el5:%define saml2_cfg_opts ""}
+%{?el5:%define mfa_cfg_opts ""}
+%{?el6:%define mfa_cfg_opts ""}
 %{?el6:Requires: lasso}
 %{?el6:BuildRequires: lasso-devel}
 %{?el7:Requires: lasso}
 %{?el7:BuildRequires: lasso-devel}
+%{?el7:Requires: liboath}
+%{?el7:BuildRequires: liboath-devel}
+%{?el8:Requires: lasso}
+%{?el8:BuildRequires: lasso-devel}
+%{?el8:Requires: liboath}
+%{?el8:BuildRequires: liboath-devel}
+
+%if 0%{?rhel} >= 7
+Requires: libsodium
+BuildRequires: libsodium-devel
+%define sodium_cfg_opts "--enable-sodium"
+%else
+%define sodium_cfg_opts "--disable-sodium"
+%endif
 
 %description
 SOGo is a groupware server built around OpenGroupware.org (OGo) and
@@ -186,7 +203,7 @@ rm -fr ${RPM_BUILD_ROOT}
 %else
 . /usr/share/GNUstep/Makefiles/GNUstep.sh
 %endif
-./configure %saml2_cfg_opts
+./configure %saml2_cfg_opts %mfa_cfg_opts %sodium_cfg_opts
 
 case %{_target_platform} in
 ppc64-*) 
@@ -402,7 +419,7 @@ find %{_docdir}/ -name '*.sh' -exec chmod a+x {} \;
 %if 0%{?_with_systemd}
   systemctl daemon-reload
   systemctl enable sogod
-  systemctl restart sogod > /dev/null 2>&1
+  systemctl try-restart sogod > /dev/null 2>&1
 %else
   /sbin/chkconfig --add sogod
   /etc/init.d/sogod condrestart  >&/dev/null
@@ -432,6 +449,9 @@ fi
 
 # ********************************* changelog *************************
 %changelog
+* Tue Aug 11 2020 Stephane de Labrusse <stephdl@de-labrusse.fr>
+- Bump to 5.0.0
+
 * Fri May 22 2020  Stephane de Labrusse <stephdl@de-labrusse.fr>
 - Bump to 4.3.2
 
