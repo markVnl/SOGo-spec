@@ -13,13 +13,6 @@
 
 %{!?python_sys_pyver: %global python_sys_pyver %(/usr/bin/python -c "import sys; print sys.hexversion")}
 
-# Systemd for fedora >= 17 or el 7
-%if 0%{?fedora} >= 17 || 0%{?rhel} >= 7
-  %global _with_systemd 1
-%else
-  %global _with_systemd 0
-%endif
-
 %define sogo_user sogo
 
 Summary:      SOGo
@@ -34,41 +27,14 @@ Group:        Productivity/Groupware
 Source:       https://github.com/inverse-inc/sogo/archive/SOGo-%{sogo_version}.tar.gz
 Prefix:       /usr
 AutoReqProv:  no
-Requires:     gnustep-base >= 1.23, sope%{sope_major_version}%{sope_minor_version}-core, httpd, sope%{sope_major_version}%{sope_minor_version}-core, sope%{sope_major_version}%{sope_minor_version}-appserver, sope%{sope_major_version}%{sope_minor_version}-ldap, sope%{sope_major_version}%{sope_minor_version}-cards >= %{sogo_version}, sope%{sope_major_version}%{sope_minor_version}-gdl1-contentstore >= %{sogo_version}, sope%{sope_major_version}%{sope_minor_version}-sbjson, libmemcached, memcached, tmpwatch, libzip
+Requires:     gnustep-base >= 1.23, sope%{sope_major_version}%{sope_minor_version}-core, httpd, sope%{sope_major_version}%{sope_minor_version}-core, sope%{sope_major_version}%{sope_minor_version}-appserver, sope%{sope_major_version}%{sope_minor_version}-ldap, sope%{sope_major_version}%{sope_minor_version}-cards >= %{sogo_version}, sope%{sope_major_version}%{sope_minor_version}-gdl1-contentstore >= %{sogo_version}, sope%{sope_major_version}%{sope_minor_version}-sbjson, lasso, libmemcached, memcached, libcurl, libzip, liboath, libsodium
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}
-BuildRequires:  gcc-objc gnustep-base gnustep-make gnustep-base-devel sope%{sope_major_version}%{sope_minor_version}-appserver-devel sope%{sope_major_version}%{sope_minor_version}-core-devel sope%{sope_major_version}%{sope_minor_version}-ldap-devel sope%{sope_major_version}%{sope_minor_version}-mime-devel sope%{sope_major_version}%{sope_minor_version}-xml-devel sope%{sope_major_version}%{sope_minor_version}-gdl1-devel sope%{sope_major_version}%{sope_minor_version}-sbjson-devel libmemcached-devel sed libcurl-devel openldap-devel %{?oc_build_depends} libzip-devel
+BuildRequires:  gcc-objc gnustep-base gnustep-make gnustep-base-devel sope%{sope_major_version}%{sope_minor_version}-appserver-devel sope%{sope_major_version}%{sope_minor_version}-core-devel sope%{sope_major_version}%{sope_minor_version}-ldap-devel sope%{sope_major_version}%{sope_minor_version}-mime-devel sope%{sope_major_version}%{sope_minor_version}-xml-devel sope%{sope_major_version}%{sope_minor_version}-gdl1-devel sope%{sope_major_version}%{sope_minor_version}-sbjson-devel lasso-devel libmemcached-devel sed libcurl-devel openldap-devel libzip-devel liboath-devel libsodium-devel
 
-
-# Required by MS Exchange freebusy lookups
-%{?el5:Requires: curl}
-%{?el5:BuildRequires: curl-devel}
-%{?el6:Requires: libcurl}
-%{?el6:BuildRequires: libcurl-devel}
-
-# saml is enabled everywhere except on el5 since its glib2 is prehistoric
 %define saml2_cfg_opts "--enable-saml2"
 %define mfa_cfg_opts "--enable-mfa"
-%{?el5:%define saml2_cfg_opts ""}
-%{?el5:%define mfa_cfg_opts ""}
-%{?el6:%define mfa_cfg_opts ""}
-%{?el6:Requires: lasso}
-%{?el6:BuildRequires: lasso-devel}
-%{?el7:Requires: lasso}
-%{?el7:BuildRequires: lasso-devel}
-%{?el7:Requires: liboath}
-%{?el7:BuildRequires: liboath-devel}
-%{?el8:Requires: lasso}
-%{?el8:BuildRequires: lasso-devel}
-%{?el8:Requires: liboath}
-%{?el8:BuildRequires: liboath-devel}
-
-%if 0%{?rhel} >= 7
-Requires: libsodium
-BuildRequires: libsodium-devel
 %define sodium_cfg_opts "--enable-sodium"
-%else
-%define sodium_cfg_opts "--disable-sodium"
-%endif
+
 
 %description
 SOGo is a groupware server built around OpenGroupware.org (OGo) and
@@ -189,20 +155,9 @@ rm -fr ${RPM_BUILD_ROOT}
 %setup -q -n sogo-SOGo-%{sogo_version}
 
 
-# small tweak to the python script for RHEL5
-# if hex(sys.hexversion) < 0x02060000
-#%if %{python_sys_pyver} < 33947648
-#  sed -i 's!/usr/bin/env python!/usr/bin/env python2.6!' Scripts/openchange_user_cleanup
-#%endif
-
-
 # ****************************** build ********************************
 %build
-%if 0%{?el7}
 . %{_libdir}/GNUstep/Makefiles/GNUstep.sh
-%else
-. /usr/share/GNUstep/Makefiles/GNUstep.sh
-%endif
 ./configure %saml2_cfg_opts %mfa_cfg_opts %sodium_cfg_opts
 
 case %{_target_platform} in
@@ -242,12 +197,8 @@ make DESTDIR=${RPM_BUILD_ROOT} \
      CC="$cc" LDFLAGS="$ldflags" \
      install
 
-%if 0%{?_with_systemd}
-  install -d  ${RPM_BUILD_ROOT}%{_unitdir}
-%else
-  install -d  ${RPM_BUILD_ROOT}/etc/init.d
-%endif
 
+install -d  ${RPM_BUILD_ROOT}%{_unitdir}
 install -d  ${RPM_BUILD_ROOT}/etc/cron.d
 install -d ${RPM_BUILD_ROOT}/etc/cron.daily
 install -d ${RPM_BUILD_ROOT}/etc/logrotate.d
@@ -266,17 +217,12 @@ install -m 600 Scripts/sogo.cron ${RPM_BUILD_ROOT}/etc/cron.d/sogo
 cp Scripts/tmpwatch ${RPM_BUILD_ROOT}/etc/cron.daily/sogo-tmpwatch
 chmod 755 ${RPM_BUILD_ROOT}/etc/cron.daily/sogo-tmpwatch
 cp Scripts/logrotate ${RPM_BUILD_ROOT}/etc/logrotate.d/sogo
+cp Scripts/sogo-systemd-redhat ${RPM_BUILD_ROOT}%{_unitdir}/sogod.service
+chmod 644 ${RPM_BUILD_ROOT}%{_unitdir}/sogod.service
+mkdir ${RPM_BUILD_ROOT}/etc/tmpfiles.d
+cp Scripts/sogo-systemd.conf ${RPM_BUILD_ROOT}/etc/tmpfiles.d/sogo.conf
+chmod 644 ${RPM_BUILD_ROOT}/etc/tmpfiles.d/sogo.conf
 
-%if 0%{?_with_systemd}
-  cp Scripts/sogo-systemd-redhat ${RPM_BUILD_ROOT}%{_unitdir}/sogod.service
-  chmod 644 ${RPM_BUILD_ROOT}%{_unitdir}/sogod.service
-  mkdir ${RPM_BUILD_ROOT}/etc/tmpfiles.d
-  cp Scripts/sogo-systemd.conf ${RPM_BUILD_ROOT}/etc/tmpfiles.d/sogo.conf
-  chmod 644 ${RPM_BUILD_ROOT}/etc/tmpfiles.d/sogo.conf
-%else
-  cp Scripts/sogo-init.d-redhat ${RPM_BUILD_ROOT}/etc/init.d/sogod
-  chmod 755 ${RPM_BUILD_ROOT}/etc/init.d/sogod
-%endif
 
 cp Scripts/sogo-default ${RPM_BUILD_ROOT}/etc/sysconfig/sogo
 rm -rf ${RPM_BUILD_ROOT}%{_bindir}/test_quick_extract
@@ -307,12 +253,8 @@ rm -fr ${RPM_BUILD_ROOT}
 %files -n sogo
 %defattr(-,root,root,-)
 
-%if 0%{?_with_systemd}
 %{_unitdir}/sogod.service
 %{_sysconfdir}/tmpfiles.d/sogo.conf
-%else
-%{_sysconfdir}/init.d/sogod
-%endif
 %{_sysconfdir}/cron.daily/sogo-tmpwatch
 %dir %attr(0700, %sogo_user, %sogo_user) %{_var}/lib/sogo
 %dir %attr(0700, %sogo_user, %sogo_user) %{_var}/log/sogo
@@ -416,25 +358,16 @@ find %{_libdir}/GNUstep/SOGo/WebServerResources  -exec touch {} \;
 # make shells scripts in documentation directory executable
 find %{_docdir}/ -name '*.sh' -exec chmod a+x {} \;
 
-%if 0%{?_with_systemd}
-  systemctl daemon-reload
-  systemctl enable sogod
-  systemctl try-restart sogod > /dev/null 2>&1
-%else
-  /sbin/chkconfig --add sogod
-  /etc/init.d/sogod condrestart  >&/dev/null
-%endif
+systemctl daemon-reload
+systemctl enable sogod
+systemctl try-restart sogod > /dev/null 2>&1
+
 
 %preun
 if [ "$1" == "0" ]
 then
-  %if 0%{?_with_systemd}
-    systemctl disable sogod
-    systemctl stop sogod > /dev/null 2>&1
-  %else
-    /sbin/chkconfig --del sogod
-    /sbin/service sogod stop > /dev/null 2>&1
-  %endif
+  systemctl disable sogod
+  systemctl stop sogod > /dev/null 2>&1
 fi
 
 %postun

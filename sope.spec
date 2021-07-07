@@ -27,9 +27,7 @@ Prefix:       /usr
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:  gnustep-base gnustep-make gcc-objc postgresql-devel openldap-devel gnustep-base-devel libxml2-devel
 
-%{?el5:BuildRequires: mysql-devel}
-%{?el6:BuildRequires: mysql-devel}
-%{?el7:BuildRequires: mariadb-devel}
+BuildRequires: mariadb-devel
 
 %description
 sope
