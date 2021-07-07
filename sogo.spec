@@ -11,10 +11,10 @@ Summary:      SOGo
 Name:         sogo
 Version:      %{sogo_version}
 Release:      %{sogo_release}%{?dist}
-Vendor:       http://www.inverse.ca/
+Vendor:       https://inverse.ca/
 Packager:     Inverse inc. <info@inverse.ca>
 License:      GPL
-URL:          http://www.inverse.ca/contributions/sogo.html
+URL:          https://sogo.nu/
 Group:        Productivity/Groupware
 Source:       https://github.com/inverse-inc/sogo/archive/SOGo-%{sogo_version}.tar.gz
 Prefix:       /usr
@@ -109,7 +109,7 @@ Requires:     sope%{sope_major_version}%{sope_minor_version}-gdl1
 AutoReqProv:  no
 
 %description -n sope%{sope_major_version}%{sope_minor_version}-gdl1-contentstore-devel
-This package contains the header files for SOPE's GDLContentStore library.
+This package contains the header files for SOPE\'s GDLContentStore library.
 
 SOPE is a framework for developing web applications and services. The
 name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
